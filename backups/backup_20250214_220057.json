@@ -1,0 +1,1 @@
+[{"id":1,"cardNumber":"1234567890123456","cardHolder":"John Smith Updated","expirationDate":"12/26","cvv":"123","creditLimit":7000.0,"balance":50.0,"status":"EXPIRED","createdAt":"2025-02-14T21:55:23.500567","updatedAt":"2025-02-14T22:00:48.710385","isActive":false}]

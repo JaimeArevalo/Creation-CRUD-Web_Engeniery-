@@ -1,0 +1,364 @@
+{
+	"info": {
+	  "name": "Card Demo API",
+	  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+	  {
+		"name": "Cards",
+		"item": [
+		  {
+			"name": "1. Create Card (Valid)",
+			"request": {
+			  "method": "POST",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"cardNumber\": \"1234567890123456\",\n    \"cardHolder\": \"John Smith\",\n    \"expirationDate\": \"12/25\",\n    \"cvv\": \"123\",\n    \"creditLimit\": 5000.00,\n    \"balance\": 0.00,\n    \"status\": \"ACTIVE\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/cards",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards"]
+			  }
+			}
+		  },
+		  {
+			"name": "2. Create Card (Invalid)",
+			"request": {
+			  "method": "POST",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"cardNumber\": \"123\",\n    \"cardHolder\": \"123\",\n    \"expirationDate\": \"13/25\",\n    \"cvv\": \"12\",\n    \"creditLimit\": -100.00,\n    \"balance\": -50.00,\n    \"status\": \"INVALID\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/cards",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards"]
+			  }
+			}
+		  },
+		  {
+			"name": "3. Get All Cards",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/cards",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards"]
+			  }
+			}
+		  },
+		  {
+			"name": "4. Get Card by ID",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/cards/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "5. Get Card by Number",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/cards/number/1234567890123456",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards", "number", "1234567890123456"]
+			  }
+			}
+		  },
+		  {
+			"name": "6. Update Card (Valid)",
+			"request": {
+			  "method": "PUT",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"cardHolder\": \"John Smith Updated\",\n    \"expirationDate\": \"12/26\",\n    \"cvv\": \"123\",\n    \"creditLimit\": 6000.00,\n    \"status\": \"ACTIVE\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/cards/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "7. Update Card (Invalid)",
+			"request": {
+			  "method": "PUT",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"cardHolder\": \"123\",\n    \"expirationDate\": \"13/25\",\n    \"cvv\": \"12\",\n    \"creditLimit\": -1000.00,\n    \"status\": \"INVALID\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/cards/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "8. Patch Card",
+			"request": {
+			  "method": "PATCH",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"creditLimit\": 7000.00,\n    \"status\": \"BLOCKED\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/cards/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "9. Delete Card",
+			"request": {
+			  "method": "DELETE",
+			  "url": {
+				"raw": "http://localhost:8080/api/cards/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards", "1"]
+			  }
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "Transactions",
+		"item": [
+		  {
+			"name": "1. Create Transaction (Purchase)",
+			"request": {
+			  "method": "POST",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"cardId\": 1,\n    \"amount\": 100.00,\n    \"type\": \"PURCHASE\",\n    \"description\": \"Online purchase at Amazon\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions"]
+			  }
+			}
+		  },
+		  {
+			"name": "2. Create Transaction (Payment)",
+			"request": {
+			  "method": "POST",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"cardId\": 1,\n    \"amount\": 50.00,\n    \"type\": \"PAYMENT\",\n    \"description\": \"Monthly payment\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions"]
+			  }
+			}
+		  },
+		  {
+			"name": "3. Get All Transactions",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions"]
+			  }
+			}
+		  },
+		  {
+			"name": "4. Get Transaction by ID",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "5. Get Transactions by Card ID",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions/card/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions", "card", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "6. Update Transaction",
+			"request": {
+			  "method": "PUT",
+			  "header": [
+				{
+				  "key": "Content-Type",
+				  "value": "application/json"
+				}
+			  ],
+			  "body": {
+				"mode": "raw",
+				"raw": "{\n    \"type\": \"PURCHASE\",\n    \"description\": \"Updated transaction description\"\n}"
+			  },
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "7. Delete Transaction",
+			"request": {
+			  "method": "DELETE",
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions/1",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions", "1"]
+			  }
+			}
+		  },
+		  {
+			"name": "8. Transaction Report",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions/report?startDate=2024-01-01&endDate=2024-12-31&type=PURCHASE",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions", "report"],
+				"query": [
+				  {
+					"key": "startDate",
+					"value": "2024-01-01"
+				  },
+				  {
+					"key": "endDate",
+					"value": "2024-12-31"
+				  },
+				  {
+					"key": "type",
+					"value": "PURCHASE"
+				  }
+				]
+			  }
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "Backup",
+		"item": [
+		  {
+			"name": "1. Create Manual Backup",
+			"request": {
+			  "method": "POST",
+			  "url": {
+				"raw": "http://localhost:8080/api/backup/manual",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "backup", "manual"]
+			  }
+			}
+		  },
+		  {
+			"name": "2. List Backups",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/backup/list",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "backup", "list"]
+			  }
+			}
+		  }
+		]
+	  }
+	]
+  }
