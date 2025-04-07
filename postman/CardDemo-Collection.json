@@ -54,15 +54,50 @@
 			}
 		  },
 		  {
-			"name": "3. Get All Cards",
+			"name": "3. Get All Cards (Paginated)",
 			"request": {
 			  "method": "GET",
 			  "url": {
-				"raw": "http://localhost:8080/api/cards",
+				"raw": "http://localhost:8080/api/cards?page=0&size=10&sortBy=id&sortDir=asc",
 				"protocol": "http",
 				"host": ["localhost"],
 				"port": "8080",
-				"path": ["api", "cards"]
+				"path": ["api", "cards"],
+				"query": [
+				  {
+					"key": "page",
+					"value": "0",
+					"description": "Page number (0-based)"
+				  },
+				  {
+					"key": "size",
+					"value": "10",
+					"description": "Number of records per page"
+				  },
+				  {
+					"key": "sortBy",
+					"value": "id",
+					"description": "Field to sort by"
+				  },
+				  {
+					"key": "sortDir",
+					"value": "asc",
+					"description": "Sort direction (asc or desc)"
+				  }
+				]
+			  }
+			}
+		  },
+		  {
+			"name": "3.1 Get All Cards (No Pagination)",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/cards/all",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "cards", "all"]
 			  }
 			}
 		  },
@@ -226,15 +261,50 @@
 			}
 		  },
 		  {
-			"name": "3. Get All Transactions",
+			"name": "3. Get All Transactions (Paginated)",
 			"request": {
 			  "method": "GET",
 			  "url": {
-				"raw": "http://localhost:8080/api/transactions",
+				"raw": "http://localhost:8080/api/transactions?page=0&size=10&sortBy=transactionDate&sortDir=desc",
 				"protocol": "http",
 				"host": ["localhost"],
 				"port": "8080",
-				"path": ["api", "transactions"]
+				"path": ["api", "transactions"],
+				"query": [
+				  {
+					"key": "page",
+					"value": "0",
+					"description": "Page number (0-based)"
+				  },
+				  {
+					"key": "size",
+					"value": "10",
+					"description": "Number of records per page"
+				  },
+				  {
+					"key": "sortBy",
+					"value": "transactionDate",
+					"description": "Field to sort by"
+				  },
+				  {
+					"key": "sortDir",
+					"value": "desc",
+					"description": "Sort direction (asc or desc)"
+				  }
+				]
+			  }
+			}
+		  },
+		  {
+			"name": "3.1 Get All Transactions (No Pagination)",
+			"request": {
+			  "method": "GET",
+			  "url": {
+				"raw": "http://localhost:8080/api/transactions/all",
+				"protocol": "http",
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["api", "transactions", "all"]
 			  }
 			}
 		  },
@@ -252,15 +322,37 @@
 			}
 		  },
 		  {
-			"name": "5. Get Transactions by Card ID",
+			"name": "5. Get Transactions by Card ID (Paginated)",
 			"request": {
 			  "method": "GET",
 			  "url": {
-				"raw": "http://localhost:8080/api/transactions/card/1",
+				"raw": "http://localhost:8080/api/transactions/card/1?page=0&size=10&sortBy=transactionDate&sortDir=desc",
 				"protocol": "http",
 				"host": ["localhost"],
 				"port": "8080",
-				"path": ["api", "transactions", "card", "1"]
+				"path": ["api", "transactions", "card", "1"],
+				"query": [
+				  {
+					"key": "page",
+					"value": "0",
+					"description": "Page number (0-based)"
+				  },
+				  {
+					"key": "size",
+					"value": "10",
+					"description": "Number of records per page"
+				  },
+				  {
+					"key": "sortBy",
+					"value": "transactionDate",
+					"description": "Field to sort by"
+				  },
+				  {
+					"key": "sortDir",
+					"value": "desc",
+					"description": "Sort direction (asc or desc)"
+				  }
+				]
 			  }
 			}
 		  },
@@ -301,11 +393,11 @@
 			}
 		  },
 		  {
-			"name": "8. Transaction Report",
+			"name": "8. Transaction Report (Paginated)",
 			"request": {
 			  "method": "GET",
 			  "url": {
-				"raw": "http://localhost:8080/api/transactions/report?startDate=2024-01-01&endDate=2024-12-31&type=PURCHASE",
+				"raw": "http://localhost:8080/api/transactions/report?startDate=2024-01-01&endDate=2024-12-31&type=PURCHASE&page=0&size=10&sortBy=transactionDate&sortDir=desc",
 				"protocol": "http",
 				"host": ["localhost"],
 				"port": "8080",
@@ -313,15 +405,38 @@
 				"query": [
 				  {
 					"key": "startDate",
-					"value": "2024-01-01"
+					"value": "2024-01-01",
+					"description": "Start date filter (yyyy-MM-dd)"
 				  },
 				  {
 					"key": "endDate",
-					"value": "2024-12-31"
+					"value": "2024-12-31",
+					"description": "End date filter (yyyy-MM-dd)"
 				  },
 				  {
 					"key": "type",
-					"value": "PURCHASE"
+					"value": "PURCHASE",
+					"description": "Transaction type filter"
+				  },
+				  {
+					"key": "page",
+					"value": "0",
+					"description": "Page number (0-based)"
+				  },
+				  {
+					"key": "size",
+					"value": "10",
+					"description": "Number of records per page"
+				  },
+				  {
+					"key": "sortBy",
+					"value": "transactionDate",
+					"description": "Field to sort by"
+				  },
+				  {
+					"key": "sortDir",
+					"value": "desc",
+					"description": "Sort direction (asc or desc)"
 				  }
 				]
 			  }

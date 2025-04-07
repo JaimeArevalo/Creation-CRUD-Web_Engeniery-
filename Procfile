@@ -1,0 +1,1 @@
+web: java -jar target/card-demo-1.0-SNAPSHOT.jar

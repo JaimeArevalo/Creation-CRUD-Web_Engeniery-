@@ -1,13 +1,14 @@
 package com.carddemo.service;
 
 import com.carddemo.model.dto.TransactionRequest;
-
 import com.carddemo.model.Transaction;
 import com.carddemo.model.Card;
 import com.carddemo.repository.TransactionRepository;
 import com.carddemo.exception.CardNotFoundException;
 import com.carddemo.exception.TransactionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -88,8 +88,20 @@ public class TransactionService {
         return transactionRepository.findByCardId(cardId);
     }
 
-    public List<Transaction> getAllTransactions() {
+    public Page<Transaction> getTransactionsByCardId(Long cardId, Pageable pageable) {
+        Card card = cardService.getCardById(cardId);
+        if (card == null) {
+            throw new CardNotFoundException("Card not found with id: " + cardId);
+        }
+        return transactionRepository.findByCardId(cardId, pageable);
+    }
+
+    public List<Transaction> getAllTransactionsWithoutPagination() {
         return transactionRepository.findAll();
+    }
+    
+    public Page<Transaction> getAllTransactions(Pageable pageable) {
+        return transactionRepository.findAll(pageable);
     }
 
     public Transaction updateTransaction(Long id, TransactionRequest request) {
@@ -119,20 +131,32 @@ public class TransactionService {
         LocalDate endDate, 
         String type) {
     
-    LocalDateTime startDateTime = startDate != null 
-        ? startDate.atStartOfDay() 
-        : LocalDateTime.MIN;
+        LocalDateTime startDateTime = startDate != null 
+            ? startDate.atStartOfDay() 
+            : LocalDateTime.MIN;
+        
+        LocalDateTime endDateTime = endDate != null 
+            ? endDate.atTime(23, 59, 59) 
+            : LocalDateTime.MAX;
+        
+        return transactionRepository.findTransactionsByFilter(startDateTime, endDateTime, type);
+    }
     
-    LocalDateTime endDateTime = endDate != null 
-        ? endDate.atTime(23, 59, 59) 
-        : LocalDateTime.MAX;
+    public Page<Transaction> generateTransactionReport(
+        LocalDate startDate, 
+        LocalDate endDate, 
+        String type,
+        Pageable pageable) {
     
-    List<Transaction> filteredTransactions = transactionRepository.findAll().stream()
-        .filter(t -> startDate == null || t.getTransactionDate().isAfter(startDateTime))
-        .filter(t -> endDate == null || t.getTransactionDate().isBefore(endDateTime))
-        .filter(t -> type == null || t.getType().equalsIgnoreCase(type))
-        .collect(Collectors.toList());
-
-    return filteredTransactions;
-}
+        LocalDateTime startDateTime = startDate != null 
+            ? startDate.atStartOfDay() 
+            : LocalDateTime.MIN;
+        
+        LocalDateTime endDateTime = endDate != null 
+            ? endDate.atTime(23, 59, 59) 
+            : LocalDateTime.MAX;
+        
+        return transactionRepository.findTransactionsByFilterWithPagination(
+            startDateTime, endDateTime, type, pageable);
+    }
 }

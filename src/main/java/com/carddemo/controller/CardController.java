@@ -3,14 +3,18 @@ package com.carddemo.controller;
 import com.carddemo.model.Card;
 import com.carddemo.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/cards")
@@ -26,7 +30,28 @@ public class CardController {
     }
     
     @GetMapping
-    public ResponseEntity<List<Card>> getAllCards() {
+    public ResponseEntity<Map<String, Object>> getAllCards(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+        
+        Sort.Direction direction = sortDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        
+        Page<Card> pageCards = cardService.getAllCards(pageable);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("cards", pageCards.getContent());
+        response.put("currentPage", pageCards.getNumber());
+        response.put("totalItems", pageCards.getTotalElements());
+        response.put("totalPages", pageCards.getTotalPages());
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/all")
+    public ResponseEntity<List<Card>> getAllCardsWithoutPagination() {
         return ResponseEntity.ok(cardService.getAllCards());
     }
     

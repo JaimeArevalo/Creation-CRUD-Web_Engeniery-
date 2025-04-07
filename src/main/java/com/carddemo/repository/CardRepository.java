@@ -1,6 +1,8 @@
 package com.carddemo.repository;
 
 import com.carddemo.model.Card;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,4 +15,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     
     @Query("SELECT c FROM Card c WHERE c.isActive = true")
     List<Card> findAllActive();
+    
+    @Query("SELECT c FROM Card c WHERE c.isActive = true")
+    Page<Card> findAllActiveWithPagination(Pageable pageable);
 }
