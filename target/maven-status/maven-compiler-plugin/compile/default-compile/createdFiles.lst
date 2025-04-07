@@ -11,10 +11,12 @@ com/carddemo/model/dto/CardRequest.class
 com/carddemo/model/Card.class
 com/carddemo/exception/InvalidCardDataException.class
 com/carddemo/controller/TransactionController$ErrorResponse.class
+com/carddemo/config/DataInitializer.class
 com/carddemo/service/ValidationService.class
 com/carddemo/service/BackupService.class
 com/carddemo/exception/CardNotFoundException.class
 com/carddemo/exception/DuplicateCardException.class
+com/carddemo/config/DataLoader.class
 com/carddemo/controller/CardController.class
 com/carddemo/exception/GlobalExceptionHandler$ErrorResponse.class
 com/carddemo/controller/BackupController.class
