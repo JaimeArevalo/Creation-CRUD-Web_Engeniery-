@@ -5,7 +5,7 @@ spring:
     password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 5
+      maximum-pool-size: 3
       minimum-idle: 1
       connection-timeout: 30000
       idle-timeout: 600000
@@ -17,16 +17,19 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: UTC
         connection:
           provider_disables_autocommit: true
-        generate_statistics: true
+        generate_statistics: false
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -42,21 +45,25 @@ server:
   error:
     include-message: always
     include-binding-errors: always
-    include-stacktrace: always
+    include-stacktrace: never
     whitelabel:
       enabled: false
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,text/css,application/javascript
+    min-response-size: 1024
 
 logging:
   level:
     root: INFO
-    org.springframework: DEBUG
-    org.hibernate: DEBUG
-    com.carddemo: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    com.zaxxer.hikari: DEBUG
-    org.flywaydb: DEBUG
-    org.postgresql: DEBUG
+    org.springframework: INFO
+    org.hibernate: INFO
+    com.carddemo: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
+    com.zaxxer.hikari: INFO
+    org.flywaydb: INFO
+    org.postgresql: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
@@ -64,7 +71,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info
   endpoint:
     health:
       show-details: always

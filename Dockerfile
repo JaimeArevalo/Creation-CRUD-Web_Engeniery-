@@ -20,6 +20,9 @@ RUN mvn clean package -DskipTests -Dmaven.wagon.http.readTimeout=180000
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 
+# Add JVM options for memory optimization
+ENV JAVA_OPTS="-Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Djava.security.egd=file:/dev/./urandom"
+
 # Instalar curl para healthchecks
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
@@ -30,4 +33,9 @@ EXPOSE 8080
 ENV SPRING_PROFILES_ACTIVE=prod
 ENV SERVER_PORT=8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"] 
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8080}/actuator/health || exit 1
+
+# Run the application with optimized settings
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"] 
