@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    
+    <mirrors>
+        <mirror>
+            <id>maven-default-http-blocker</id>
+            <mirrorOf>external:http:*</mirrorOf>
+            <name>Pseudo repository to mirror external repositories initially using HTTP.</name>
+            <url>http://0.0.0.0/</url>
+            <blocked>true</blocked>
+        </mirror>
+        <mirror>
+            <id>google-maven-central</id>
+            <name>Google Maven Central</name>
+            <url>https://maven-central.storage.googleapis.com</url>
+            <mirrorOf>central</mirrorOf>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <maven.wagon.http.readTimeout>180000</maven.wagon.http.readTimeout>
+                <maven.wagon.http.connectionTimeout>180000</maven.wagon.http.connectionTimeout>
+            </properties>
+        </profile>
+    </profiles>
+</settings> 
