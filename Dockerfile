@@ -8,6 +8,6 @@ RUN ls -l /app/target
 # Run stage
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/target/card-demo-1.0-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/app.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"] 
