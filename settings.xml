@@ -11,12 +11,6 @@
             <url>http://0.0.0.0/</url>
             <blocked>true</blocked>
         </mirror>
-        <mirror>
-            <id>google-maven-central</id>
-            <name>Google Maven Central</name>
-            <url>https://maven-central.storage.googleapis.com</url>
-            <mirrorOf>central</mirrorOf>
-        </mirror>
     </mirrors>
 
     <profiles>
@@ -25,6 +19,23 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <name>Maven Central</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                </repository>
+                <repository>
+                    <id>spring-milestones</id>
+                    <name>Spring Milestones</name>
+                    <url>https://repo.spring.io/milestone</url>
+                </repository>
+                <repository>
+                    <id>spring-snapshots</id>
+                    <name>Spring Snapshots</name>
+                    <url>https://repo.spring.io/snapshot</url>
+                </repository>
+            </repositories>
             <properties>
                 <maven.wagon.http.readTimeout>180000</maven.wagon.http.readTimeout>
                 <maven.wagon.http.connectionTimeout>180000</maven.wagon.http.connectionTimeout>
