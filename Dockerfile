@@ -19,6 +19,15 @@ RUN mvn clean package -DskipTests -Dmaven.wagon.http.readTimeout=180000
 # Run stage
 FROM eclipse-temurin:17-jre
 WORKDIR /app
+
+# Instalar curl para healthchecks
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /app/target/app.jar app.jar
 EXPOSE 8080
+
+# Configurar variables de entorno por defecto
+ENV SPRING_PROFILES_ACTIVE=prod
+ENV SERVER_PORT=8080
+
 ENTRYPOINT ["java", "-jar", "app.jar"] 
