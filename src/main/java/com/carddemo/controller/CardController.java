@@ -42,7 +42,7 @@ public class CardController {
         Page<Card> pageCards = cardService.getAllCards(pageable);
         
         Map<String, Object> response = new HashMap<>();
-        response.put("cards", pageCards.getContent());
+        response.put("content", pageCards.getContent());
         response.put("currentPage", pageCards.getNumber());
         response.put("totalItems", pageCards.getTotalElements());
         response.put("totalPages", pageCards.getTotalPages());

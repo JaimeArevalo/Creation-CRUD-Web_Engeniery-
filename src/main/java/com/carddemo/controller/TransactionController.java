@@ -65,7 +65,7 @@ public class TransactionController {
         Page<Transaction> pageTransactions = transactionService.getAllTransactions(pageable);
         
         Map<String, Object> response = new HashMap<>();
-        response.put("transactions", pageTransactions.getContent());
+        response.put("content", pageTransactions.getContent());
         response.put("currentPage", pageTransactions.getNumber());
         response.put("totalItems", pageTransactions.getTotalElements());
         response.put("totalPages", pageTransactions.getTotalPages());
@@ -102,7 +102,7 @@ public class TransactionController {
             Page<Transaction> pageTransactions = transactionService.getTransactionsByCardId(cardId, pageable);
             
             Map<String, Object> response = new HashMap<>();
-            response.put("transactions", pageTransactions.getContent());
+            response.put("content", pageTransactions.getContent());
             response.put("currentPage", pageTransactions.getNumber());
             response.put("totalItems", pageTransactions.getTotalElements());
             response.put("totalPages", pageTransactions.getTotalPages());
@@ -168,7 +168,7 @@ public class TransactionController {
             }
             
             Map<String, Object> response = new HashMap<>();
-            response.put("transactions", pageReport.getContent());
+            response.put("content", pageReport.getContent());
             response.put("currentPage", pageReport.getNumber());
             response.put("totalItems", pageReport.getTotalElements());
             response.put("totalPages", pageReport.getTotalPages());
