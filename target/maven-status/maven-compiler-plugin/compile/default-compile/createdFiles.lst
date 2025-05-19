@@ -5,6 +5,7 @@ com/carddemo/exception/GlobalExceptionHandler.class
 com/carddemo/exception/GlobalExceptionHandler$ValidationErrorResponse.class
 com/carddemo/exception/TransactionNotFoundException.class
 com/carddemo/validation/TransactionValidator.class
+com/carddemo/util/DataMigrationUtil.class
 com/carddemo/model/dto/TransactionRequest.class
 com/carddemo/model/dto/TransactionRequest$TransactionRequestBuilder.class
 com/carddemo/model/dto/CardRequest.class
