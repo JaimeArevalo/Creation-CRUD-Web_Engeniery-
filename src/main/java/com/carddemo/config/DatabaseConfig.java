@@ -26,7 +26,7 @@ public class DatabaseConfig {
     @Profile("prod")
     public CommandLineRunner databaseConnectionCheck(DataSource dataSource, JdbcTemplate jdbcTemplate) {
         return args -> {
-            System.out.println("=== Database Connection Check ===");
+            System.out.println("\n=== Database Connection Check ===");
             System.out.println("Active Profiles: " + Arrays.toString(env.getActiveProfiles()));
             System.out.println("Database URL: " + env.getProperty("spring.datasource.url"));
             System.out.println("Database Username: " + env.getProperty("spring.datasource.username"));
@@ -51,6 +51,15 @@ public class DatabaseConfig {
                 jdbcTemplate.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'", 
                     (rs, rowNum) -> rs.getString("table_name"))
                     .forEach(table -> System.out.println("Found table: " + table));
+                
+                // Check Flyway status
+                System.out.println("\n=== Checking Flyway Status ===");
+                jdbcTemplate.query("SELECT * FROM flyway_schema_history ORDER BY installed_rank DESC LIMIT 5",
+                    (rs, rowNum) -> String.format("Migration: %s, Version: %s, State: %s",
+                        rs.getString("script"),
+                        rs.getString("version"),
+                        rs.getString("success")))
+                    .forEach(status -> System.out.println(status));
                 
             } catch (SQLException e) {
                 System.err.println("\n=== Database Connection Error ===");

@@ -12,6 +12,7 @@ spring:
       max-lifetime: 1800000
       validation-timeout: 5000
       connection-test-query: SELECT 1
+      leak-detection-threshold: 60000
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -25,6 +26,7 @@ spring:
           time_zone: UTC
         connection:
           provider_disables_autocommit: true
+        generate_statistics: true
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -32,6 +34,8 @@ spring:
     validate-on-migrate: true
     out-of-order: true
     ignore-migration-patterns: "*:missing"
+    placeholders:
+      schema: public
 
 server:
   port: ${PORT:8080}
@@ -52,6 +56,7 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     com.zaxxer.hikari: DEBUG
     org.flywaydb: DEBUG
+    org.postgresql: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
@@ -64,4 +69,9 @@ management:
     health:
       show-details: always
       probes:
-        enabled: true 
+        enabled: true
+  health:
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
