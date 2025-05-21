@@ -25,6 +25,7 @@ com/carddemo/service/CardService.class
 com/carddemo/config/BackupConfig.class
 com/carddemo/model/dto/TransactionResponse.class
 com/carddemo/service/TransactionService.class
+com/carddemo/config/DatabaseConfig.class
 com/carddemo/controller/TransactionController.class
 com/carddemo/model/dto/CardResponse.class
 com/carddemo/model/dto/BackupResponse.class

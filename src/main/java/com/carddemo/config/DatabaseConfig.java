@@ -5,11 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ScriptException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -23,7 +19,6 @@ public class DatabaseConfig {
     private Environment env;
 
     @Bean
-    @Profile("prod")
     public CommandLineRunner databaseConnectionCheck(DataSource dataSource, JdbcTemplate jdbcTemplate) {
         return args -> {
             System.out.println("\n=== Database Connection Check ===");
@@ -45,21 +40,6 @@ public class DatabaseConfig {
                 System.out.println("\n=== Testing Query ===");
                 jdbcTemplate.queryForObject("SELECT 1", Integer.class);
                 System.out.println("Query test successful!");
-                
-                // Check tables
-                System.out.println("\n=== Checking Tables ===");
-                jdbcTemplate.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'", 
-                    (rs, rowNum) -> rs.getString("table_name"))
-                    .forEach(table -> System.out.println("Found table: " + table));
-                
-                // Check Flyway status
-                System.out.println("\n=== Checking Flyway Status ===");
-                jdbcTemplate.query("SELECT * FROM flyway_schema_history ORDER BY installed_rank DESC LIMIT 5",
-                    (rs, rowNum) -> String.format("Migration: %s, Version: %s, State: %s",
-                        rs.getString("script"),
-                        rs.getString("version"),
-                        rs.getString("success")))
-                    .forEach(status -> System.out.println(status));
                 
             } catch (SQLException e) {
                 System.err.println("\n=== Database Connection Error ===");
