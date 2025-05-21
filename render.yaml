@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: card-demo-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: dev
+      - key: JAVA_OPTS
+        value: -Xmx512m -Xms256m
+
+  - type: web
+    name: card-demo-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: VITE_API_URL
+        value: https://card-demo-backend.onrender.com 
