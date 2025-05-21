@@ -15,6 +15,7 @@ services:
     name: card-demo-frontend
     env: docker
     dockerfilePath: ./frontend/Dockerfile
+    context: ./frontend
     plan: free
     healthCheckPath: /
     envVars:
